@@ -110,16 +110,6 @@ ServiceLoop()
 	UBYTE messageBuffer[messageLength];
 	
 	
-	
-	/*
-	while(1)
-	{
-		_$$_Sleep(2000, 'm').DispatchSystemCall();
-		LOG("We sleep for 2000ms");
-		System::GetOutputStream().FlushBuffer();
-	}*/
-	
-	
 	for(;;)
 	{
 		returnCode = _$$_WaitMessage(

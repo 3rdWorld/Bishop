@@ -48,9 +48,14 @@ static UIRequestServiceRoutine uiRequestServiceRoutine[0x10][0x10] = {};
 __attribute__((constructor))
 static void init()
 {
-	stdOut.SetOutputStream(&System::GetOutputStream());
-	stdDbg.SetOutputStream(&System::GetOutputStream());
-	stdLog.SetOutputStream(&System::GetOutputStream());
+	{
+		auto outputStream = &System::GetOutputStream();
+			
+		stdOut.SetOutputStream(outputStream);
+		stdDbg.SetOutputStream(outputStream);
+		stdLog.SetOutputStream(outputStream);
+	}
+	
 	
 	acpi::asmi::AddressSpace::RegisterGlobalAddressSpaceInterface(
 		acpi::asmi::SystemMemory::AddressSpaceInterface::instance);
@@ -461,7 +466,11 @@ CreateThread(ULONG threadID, UBYTE priority, UBYTE(*entry)(void*), void* args,
 		
 		if(returnCode == ReturnCode_Success)
 		{
-			System::GetOutputStream();
+			auto outputStream = &System::GetOutputStream();
+				
+			stdOut.SetOutputStream(outputStream);
+			stdDbg.SetOutputStream(outputStream);
+			stdLog.SetOutputStream(outputStream);
 		}
 		
 		return returnCode;
@@ -541,6 +550,7 @@ Main(const thirdCGI::imaging::Surface& displaySurface)
 		_TRACE_CONDITION_FAILPATH_
 		
 	}
+	
 	
 	return Bishop::ServiceLoop();
 }
