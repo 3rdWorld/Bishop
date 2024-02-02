@@ -4,7 +4,7 @@
 
 namespace urls
 {
-	struct Bishop
+	struct ArchBishop
 	{
 		static UBYTE ServiceLoop();
 		static UBYTE init();
