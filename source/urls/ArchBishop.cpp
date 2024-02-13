@@ -3,11 +3,14 @@
 #include <3rdHAL/thri/ios/SystemCall.h>
 #include <3rdUSL/thri/ThreadInfo.h>
 #include <3rdUSL/System.h>
+#include <3rdUSL/ns/NameSpace.h>
+
 
 using namespace urls;
 using namespace thri::ios;
 using namespace thirdLib::stdio;
 using namespace thirdUSL;
+using namespace thirdUSL::ns;
 using namespace thirdUSL::thri;
 
 
@@ -30,7 +33,7 @@ UBYTE ArchBishop::
 ServiceLoop()
 {
 	
-	constexpr ULONG maximumMessageLength = 0x2000;
+	constexpr ULONG maximumMessageLength = 0x1000;
 	
 	static UBYTE messageBuffer[maximumMessageLength]
 		__attribute__((aligned(0x1000))) = {};
@@ -50,8 +53,17 @@ ServiceLoop()
 			
 			continue;
 		}
+		NameSpace::IoRequest::Header header = {.value = waitMessage.subject};
 		
-		LOG("Open.URL(\"%.*s\")", waitMessage.size, messageBuffer);
+		if(header.bits.IoRequestCode == NameSpace::IoRequest::Code_Open)
+		{
+			LOG("IoRequest.Open(.Path:\"%.*s\", .Flags:%x)",
+				waitMessage.size, messageBuffer, header.bits.IoRequestFlags);
+		}else
+		{
+			LOG("IoRequest[IoRequestCode:%x, IoRequestFlags:%x",
+				header.bits.IoRequestCode, header.bits.IoRequestFlags);
+		}
 		
 		System::GetOutputStream().FlushOutputStreamBuffer();
 	}
