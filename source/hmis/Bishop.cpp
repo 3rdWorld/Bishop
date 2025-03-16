@@ -28,9 +28,9 @@ using namespace thirdUSL;
 __attribute__((constructor))
 static void init()
 {
-	stdOut.SetOutputStream(&System::GetOutputStream());
-	stdDbg.SetOutputStream(&System::GetOutputStream());
-	stdLog.SetOutputStream(&System::GetOutputStream());
+	stdOut.SetOutputStream(&System::Console::GetOutputStream());
+	stdDbg.SetOutputStream(&System::Console::GetOutputStream());
+	stdLog.SetOutputStream(&System::Console::GetOutputStream());
 }
 
 /**

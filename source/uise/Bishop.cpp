@@ -15,7 +15,7 @@
 #include <3rdUSL/hmis/DeviceDescriptor.h>
 #include <3rdUSL/System.h>
 
-#include <3rdABI/BootStrap.h>
+#include <3rdART/BootStrap.h>
 
 
 
@@ -29,7 +29,7 @@ using namespace thirdUSL::hmis;
 using namespace thirdUSL;
 using namespace thirdUIA::hid;
 using namespace thirdUIA;
-using namespace abi;
+using namespace thirdART;
 
 
 ClientDescriptor::List Bishop::clientDescriptorList;
@@ -49,7 +49,7 @@ __attribute__((constructor))
 static void init()
 {
 	{
-		auto outputStream = &System::GetOutputStream();
+		auto outputStream = &System::Console::GetOutputStream();
 			
 		stdOut.SetOutputStream(outputStream);
 		stdDbg.SetOutputStream(outputStream);
@@ -119,7 +119,7 @@ static UBYTE handleUIRequestDeclareCanvas(
 	
 	if(!clientDescriptor.graphicsHeap.linearAddress)
 	{
-		if(!LinearAddressSpace::Allocator::largeHeap.GetAlignment())
+		if(!LinearAddressSpace::largeHeap.GetAlignment())
 		{
 			_TRACE_CONDITION_FAILPATH_
 			
@@ -130,7 +130,7 @@ static UBYTE handleUIRequestDeclareCanvas(
 		
 		clientDescriptor.graphicsHeap.region.base = Alignment::Truncate(
 			params.canvas.surface.buffer,
-			LinearAddressSpace::Allocator::largeHeap.GetAlignment());
+			LinearAddressSpace::largeHeap.GetAlignment());
 		
 		
 		clientDescriptor.graphicsHeap.region.size = (Alignment::RoundOff(
@@ -138,14 +138,14 @@ static UBYTE handleUIRequestDeclareCanvas(
 				params.canvas.surface.stride *
 				params.canvas.surface.dimensions.height)).GetUpperBound(),
 			
-			LinearAddressSpace::Allocator::largeHeap.GetAlignment())
+			LinearAddressSpace::largeHeap.GetAlignment())
 			
 			- clientDescriptor.graphicsHeap.region.base);
 		
 		
 		if(!(clientDescriptor.graphicsHeap.linearAddress
-			= Pointer::ToUnSignedInteger(LinearAddressSpace::Allocator::
-			largeHeap.RequestLinearAddressSpace(
+			= Pointer::ToUnSignedInteger(LinearAddressSpace::largeHeap
+			.RequestLinearAddressSpace(
 			clientDescriptor.graphicsHeap.region.size))))
 		{
 			_TRACE_CONDITION_FAILPATH_
@@ -192,7 +192,7 @@ static UBYTE handleUIRequestDeclareCanvas(
 	
 	canvasDescriptor->canvas.surface.buffer = ((
 		params.canvas.surface.buffer & (
-		LinearAddressSpace::Allocator::largeHeap.GetAlignment() - 1))
+		LinearAddressSpace::largeHeap.GetAlignment() - 1))
 		| clientDescriptor.graphicsHeap.linearAddress);
 	
 	
@@ -466,7 +466,7 @@ CreateThread(ULONG threadID, UBYTE priority, UBYTE(*entry)(void*), void* args,
 		
 		if(returnCode == ReturnCode_Success)
 		{
-			auto outputStream = &System::GetOutputStream();
+			auto outputStream = &System::Console::GetOutputStream();
 				
 			stdOut.SetOutputStream(outputStream);
 			stdDbg.SetOutputStream(outputStream);

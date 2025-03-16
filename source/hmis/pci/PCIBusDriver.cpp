@@ -4,6 +4,8 @@
 #include <3rdLib/lang/types/NullTerminatedAsciiString.h>
 #include <3rdLib/util/Trace.h>
 #include <3rdLib/util/Pointer.h>
+#include <3rdLib/util/MemOps.h>
+
 
 #include <3rdUSL/thri/ThreadInfo.h>
 #include <3rdUSL/mm/LinearAddressSpace.h>
@@ -243,7 +245,7 @@ SetupPciExpressEnhancedConfigSpace(const acpi::asdt::MCFG& mcfg)
 		mapping.region.size = (((e->busN - e->bus0) + 1) << 0x14);
 		
 		mapping.linearAddress = Pointer::ToUnSignedInteger(
-			LinearAddressSpace::Allocator::largeHeap.
+			LinearAddressSpace::largeHeap.
 			RequestLinearAddressSpace(mapping.region.size));
 		
 		if(!mapping.linearAddress)

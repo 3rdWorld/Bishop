@@ -183,8 +183,6 @@ static UBYTE InitI8042portService()
 			
 		}) != ReturnCode_Break){_TRACE_CONDITION_WARNING_}
 		
-		System::GetOutputStream().FlushOutputStreamBuffer();
-		
 		interruptSource.value = 0;
 	};
 	//--------------------------------------------------------------------------
@@ -365,10 +363,7 @@ static UBYTE InitI8042portService()
 			return ReturnCode_Success;
 		});
 		
-	}while(0);
-	
-	System::GetOutputStream().FlushOutputStreamBuffer();
-	
+	}while(0);	
 	
 	return returnCode;;
 }

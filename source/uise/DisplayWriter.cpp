@@ -122,7 +122,7 @@ AddDisplay(const thirdCGI::imaging::Surface& hardSurface)
 	
 	
 	if(!(mapping.linearAddress = thirdLib::util::Pointer::ToUnSignedInteger(
-		LinearAddressSpace::Allocator::graphicsHeap.RequestLinearAddressSpace(
+		LinearAddressSpace::graphicsHeap.RequestLinearAddressSpace(
 		mapping.region.size))))
 	{
 		_TRACE_CONDITION_FAILPATH_
@@ -161,7 +161,7 @@ AddDisplay(const thirdCGI::imaging::Surface& hardSurface)
 	}
 	
 	if(!(mapping.linearAddress = thirdLib::util::Pointer::ToUnSignedInteger(
-		LinearAddressSpace::Allocator::graphicsHeap.RequestLinearAddressSpace(
+		LinearAddressSpace::graphicsHeap.RequestLinearAddressSpace(
 		mapping.region.size))))
 	{
 		_TRACE_CONDITION_FAILPATH_
@@ -504,7 +504,7 @@ UpdateLoop()
 	
 	if(!(thirdUIA::hid::Display::Writer::memoryPool.base
 		= thirdLib::util::Pointer::ToUnSignedInteger(
-		LinearAddressSpace::Allocator::graphicsHeap.RequestLinearAddressSpace(
+		LinearAddressSpace::graphicsHeap.RequestLinearAddressSpace(
 		thirdUIA::hid::Display::Writer::memoryPool.size))))
 	{
 		_PANIC_CONDITION_BUGCHECK_

@@ -3,6 +3,7 @@
 #include <hmis/DeviceTree.h>
 
 #include <3rdLib/util/Pointer.h>
+#include <3rdLib/util/MemOps.h>
 #include <3rdLib/lang/types/NullTerminatedAsciiString.h>
 
 #include <3rdHAL/uefi/DevicePath.h>

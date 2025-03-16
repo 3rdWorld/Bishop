@@ -18,9 +18,8 @@ using namespace thirdUSL::thri;
 __attribute__((constructor))
 static void init()
 {
-	{
-		auto outputStream = &System::GetOutputStream();
-			
+	if(auto outputStream = &System::Console::GetOutputStream())
+	{	
 		stdOut.SetOutputStream(outputStream);
 		stdDbg.SetOutputStream(outputStream);
 		stdLog.SetOutputStream(outputStream);

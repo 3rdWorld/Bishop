@@ -56,12 +56,14 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1792725959" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool command="C:\Program Files\LLVM\bin\ld.lld" id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1157550599" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.link.option.userobjs.477430176" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildRTL/3rdRTL.dso}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/Build3rdLib/3rdLib.dso}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildABI/3rdABI.dso}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/Build3rdSTL/3rdSTL.dso}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildUefi/Uefi.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildAcpiAsmi/acpi.asmi.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildAcpiLang/acpi.lang.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildAcpiHmis/acpi.hmis.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildUSL/3rdUSL.dso}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildABI/3rdABI.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildCGI/3rdCGI.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildPCIB/PciBus.dso}&quot;"/>
 								</option>
@@ -186,7 +188,9 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1020552315" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool command="C:\Program Files\LLVM\bin\ld.lld" id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1966970776" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.link.option.userobjs.1923959669" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildRTL/3rdRTL.dso}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/Build3rdLib/3rdLib.dso}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildART/3rdART.dso}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/Build3rdSTL/3rdSTL.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildKeyboard/device.input.keyboard.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildPS2/i8042.dso}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OsDev/BuildAcpiAsmi/acpi.asmi.dso}&quot;"/>

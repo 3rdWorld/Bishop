@@ -14,10 +14,10 @@ namespace hmis
 		static const UQUAD base;
 		static const UQUAD size;
 		
-		static thirdUSL::mm::LinearAddressSpace::Allocator
+		static thirdUSL::mm::LinearAddressSpace::Allocator&
 			deviceDescriptorAllocator;
 		
-		static thirdUSL::mm::LinearAddressSpace::Allocator
+		static thirdUSL::mm::LinearAddressSpace::Allocator&
 			generalPurposeAllocator;
 		
 		public: static void Initialize();
