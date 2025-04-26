@@ -171,7 +171,7 @@ Enumerate(thirdUSL::hmis::HardwareDescriptor& hardwareDescriptor)
 				
 			}else
 			{
-				return ReturnCode_Success;
+				return ReturnCode_Continue;
 			}
 		});
 	}
