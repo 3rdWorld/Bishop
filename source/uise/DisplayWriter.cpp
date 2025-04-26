@@ -222,7 +222,7 @@ UpdateLoop()
 	
 	
 	
-	auto waitNextUIRepaintRequest = [&](void)->void
+	auto awaitNextUIRepaintRequest = [&](void)->void
 	{
 		ClientDescriptor* clientDescriptor;
 		
@@ -828,7 +828,7 @@ UpdateLoop()
 		}
 
 		
-		waitNextUIRepaintRequest();
+		awaitNextUIRepaintRequest();
 		
 		
 		
