@@ -8,6 +8,8 @@ namespace hmis
 	struct DeviceTree
 	{
 		static thirdUSL::hmis::HardwareDescriptor* root;
+
+		static thirdUSL::hmis::HardwareDescriptor& GetRoot();
 	};
 }
 
