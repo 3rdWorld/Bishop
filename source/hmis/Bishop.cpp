@@ -20,52 +20,7 @@ using namespace thirdUSL::hmis;
 using namespace thirdUSL;
 
 
-/**
- *
- *
- *
- */
-__attribute__((constructor))
-static void init()
-{
-	stdOut.SetOutputStream(&System::Console::GetOutputStream());
-	stdDbg.SetOutputStream(&System::Console::GetOutputStream());
-	stdLog.SetOutputStream(&System::Console::GetOutputStream());
-}
 
-/**
- *
- *
- *
- */
-static UBYTE CreateDeviceTreeRoot()
-{
-	if(DeviceTree::root)
-	{
-		_TRACE_CONDITION_FAILPATH_
-		
-		return ReturnCode_InvalidState;
-	}
-	
-	if(!(DeviceTree::root
-		= MemoryPool::RequestHardwareDescriptor()))
-	{
-		_TRACE_CONDITION_FAILPATH_
-		
-		return ReturnCode_Failure;
-	}
-	
-	DeviceTree::root->deviceName
-		= 'TOOR';
-	
-	DeviceTree::root->descriptorType
-		= HardwareDescriptor::Type_Hardware;
-	
-	DeviceTree::root->flags.bits.Enumerable
-		= true;
-	
-	return ReturnCode_Success;
-}
 
 /**
  *
@@ -105,9 +60,9 @@ shareMemoryPoolView(
 UBYTE Bishop::
 ServiceLoop()
 {
-	const ULONG messageLength = 64;
-	UBYTE returnCode;
+	constexpr ULONG messageLength = 64;
 	UBYTE messageBuffer[messageLength];
+	UBYTE returnCode;
 	
 	
 	for(;;)
@@ -138,21 +93,10 @@ init()
 	
 	MemoryPool::Initialize();
 	
-	returnCode = CreateDeviceTreeRoot();
-	
-	if(returnCode != ReturnCode_Success)
-	{
-		_TRACE_CONDITION_FAILPATH_
-		
-		return returnCode;
-	}
-	
-	
 	::hmis::pnp::PnpBusDriver::Enumerate();
-	
-	DeviceTree::root->DumpEnumTree();
-	
-	
+
+	DeviceTree::GetRoot().DumpEnumTree();
+
 	return ReturnCode_Success;
 }
 
@@ -179,8 +123,8 @@ Main()
 {
 	UBYTE returnCode;
 	
-	returnCode = shareMemoryPoolView(
-		{ThreadInfo::GetProgramHandle().uniqueID, 'ESIU'});
+	// returnCode = shareMemoryPoolView(
+	// 	{ThreadInfo::GetProgramHandle().uniqueID, 'ESIU'});
 	
 	returnCode = ServiceLoop();
 	
@@ -202,6 +146,16 @@ extern "C" UBYTE _start()
 {
 	UBYTE returnCode;
 	
+	{
+		const auto& threadHandle = ThreadInfo::GetThreadHandle();
+
+		LOG("Thread[%g:%.4s.%.4s] Hello-World..!",
+			&threadHandle.uniqueID,
+			&threadHandle.callSign,
+			&threadHandle.threadID);
+	}
+	
+
 	returnCode = Bishop::init();
 	
 	if(returnCode != ReturnCode_Success)
@@ -212,6 +166,13 @@ extern "C" UBYTE _start()
 	}
 	
 	returnCode = Bishop::Main();
+	
+	if(returnCode != ReturnCode_Success)
+	{
+		_TRACE_CONDITION_FAILPATH_
+		
+		return returnCode;
+	}   
 	
 	Bishop::fini();
 	

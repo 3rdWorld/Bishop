@@ -1,11 +1,9 @@
 #pragma once
 
 #include <3rdLib/lang/types/Primitives.h>
-#include <3rdLib/util/MacroLib.h>
-
 #include <3rdUIA/hid/Display.h>
 #include <3rdUIA/hid/Canvas.h>
-#include <3rdHAL/thri/tmx/Program.h>
+
 
 namespace uise
 {

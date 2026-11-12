@@ -146,7 +146,8 @@ Enumerate()
 	}
 	
 	
-	DeviceTree::root->childDeviceList.ForEach(
+	
+	DeviceTree::GetRoot().childDeviceList.ForEach(
 		[](DeviceDescriptor& deviceDescriptor)->UBYTE
 	{
 		HardwareDescriptor& hardwareDescriptor

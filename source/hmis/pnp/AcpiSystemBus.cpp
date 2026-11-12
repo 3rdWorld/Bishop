@@ -99,16 +99,7 @@ GetPciMemoryConfigTable()
 UBYTE AcpiSystemBus::
 Enumerate()
 {
-	if(DeviceTree::root)
-	{
-		return Enumerate(*DeviceTree::root, "\\_SB_");
-		
-	}else
-	{
-		_TRACE_CONDITION_FAILPATH_
-		
-		return ReturnCode_InvalidState;
-	}
+	return Enumerate(DeviceTree::GetRoot(), "\\_SB_");
 }
 
 
@@ -219,6 +210,7 @@ Enumerate(
 	
 	
 	
+
 	
 	if(!(devicePnpInfoBuffer = new UBYTE[0x1000]))
 	{
@@ -226,10 +218,6 @@ Enumerate(
 		
 		return ReturnCode_OutOfMemory;
 	}
-	
-	
-	
-	
 	
 	
 	

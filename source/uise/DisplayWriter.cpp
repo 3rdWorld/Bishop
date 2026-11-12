@@ -10,7 +10,10 @@
 #include <3rdLib/util/Pointer.h>
 #include <3rdLib/util/Alignment.h>
 #include <3rdLib/util/MemOps.h>
+#include <3rdLib/util/MacroLib.h>
 
+
+#include <3rdHAL/thri/tmx/Program.h>
 #include <3rdUSL/thri/ThreadInfo.h>
 #include <3rdUSL/mm/LinearAddressSpace.h>
 #include <3rdUSL/System.h>

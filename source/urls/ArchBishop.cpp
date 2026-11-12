@@ -3,28 +3,16 @@
 #include <3rdHAL/thri/ios/SystemCall.h>
 #include <3rdUSL/thri/ThreadInfo.h>
 #include <3rdUSL/System.h>
-#include <3rdUSL/ns/NameSpace.h>
+#include <3rdUSL/urns/NameSpace.h>
 
 
 using namespace urls;
 using namespace thri::ios;
 using namespace thirdLib::stdio;
 using namespace thirdUSL;
-using namespace thirdUSL::ns;
+using namespace thirdUSL::urns;
 using namespace thirdUSL::thri;
 
-
-
-__attribute__((constructor))
-static void init()
-{
-	if(auto outputStream = &System::Console::GetOutputStream())
-	{	
-		stdOut.SetOutputStream(outputStream);
-		stdDbg.SetOutputStream(outputStream);
-		stdLog.SetOutputStream(outputStream);
-	}
-}
 
 
 
@@ -63,8 +51,6 @@ ServiceLoop()
 			LOG("IoRequest[IoRequestCode:%x, IoRequestFlags:%x",
 				header.bits.IoRequestCode, header.bits.IoRequestFlags);
 		}
-		
-		System::GetOutputStream().FlushOutputStreamBuffer();
 	}
 	
 	return returnCode;

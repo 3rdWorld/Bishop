@@ -16,8 +16,8 @@
 #include <3rdUSL/System.h>
 
 #include <3rdART/BootStrap.h>
-
-
+#include <3rdART/Threader.h>
+#include <3rdART/AppInfo.h>
 
 
 using namespace uise;
@@ -48,15 +48,6 @@ static UIRequestServiceRoutine uiRequestServiceRoutine[0x10][0x10] = {};
 __attribute__((constructor))
 static void init()
 {
-	{
-		auto outputStream = &System::Console::GetOutputStream();
-			
-		stdOut.SetOutputStream(outputStream);
-		stdDbg.SetOutputStream(outputStream);
-		stdLog.SetOutputStream(outputStream);
-	}
-	
-	
 	acpi::asmi::AddressSpace::RegisterGlobalAddressSpaceInterface(
 		acpi::asmi::SystemMemory::AddressSpaceInterface::instance);
 	
@@ -447,56 +438,6 @@ ServiceLoop()
 
 
 
-
-
-
-
-
-UBYTE Bishop::
-CreateThread(ULONG threadID, UBYTE priority, UBYTE(*entry)(void*), void* args,
-	ULONG argSize)
-{
-	UBYTE returnCode;
-	
-	ULONG(*prologue)() = []()->ULONG
-	{
-		UBYTE returnCode;
-		
-		returnCode = BootStrap::InstantiateThreadLocalStorage();
-		
-		if(returnCode == ReturnCode_Success)
-		{
-			auto outputStream = &System::Console::GetOutputStream();
-				
-			stdOut.SetOutputStream(outputStream);
-			stdDbg.SetOutputStream(outputStream);
-			stdLog.SetOutputStream(outputStream);
-		}
-		
-		return returnCode;
-	};
-	
-	returnCode = _$$_CreateNewThread(
-		ThreadInfo::GetProgramHandle(),
-		threadID,
-		Pointer::ToUnSignedInteger((const void*) entry),
-		args, argSize, priority, false,
-		Pointer::ToUnSignedInteger((void*) prologue))
-		.DispatchSystemCall();
-	
-	if(returnCode != ReturnCode_Success)
-	{
-		_TRACE_CONDITION_FAILPATH_
-	}
-	
-	return returnCode;
-}
-
-
-
-
-
-
 void populateUIServiceRoutines()
 {
 	{
@@ -538,13 +479,13 @@ Main(const thirdCGI::imaging::Surface& displaySurface)
 		_TRACE_CONDITION_FAILPATH_
 		
 	}else
-	if(CreateThread('PSID', 0x00, (UBYTE(*)(void*)) &DisplayWriter::UpdateLoop, 0, 0)
+	if(Threader::CreateThread('PSID', (UBYTE(*)(void*)) &DisplayWriter::UpdateLoop, 0, 0, 0)
 		!= ReturnCode_Success)
 	{
 		_TRACE_CONDITION_FAILPATH_
 		
 	}else
-	if(CreateThread('DNIU', 0x0F, (UBYTE(*)(void*)) &UserInput::ServiceLoop, 0, 0)
+	if(Threader::CreateThread('DNIU', (UBYTE(*)(void*)) &UserInput::ServiceLoop, 0, 0, 0x0F)
 		!= ReturnCode_Success)
 	{
 		_TRACE_CONDITION_FAILPATH_
@@ -566,5 +507,25 @@ Main(const thirdCGI::imaging::Surface& displaySurface)
  */
 extern "C" UBYTE _start(int argc, char** argv)
 {
-	return Bishop::Main(*(thirdCGI::imaging::Surface*) argv);
+	{
+		const auto& threadHandle = ThreadInfo::GetThreadHandle();
+
+		LOG("Thread[%g:%.4s.%.4s] Hello-World..!",
+			&threadHandle.uniqueID,
+			&threadHandle.callSign,
+			&threadHandle.threadID);
+	}
+
+	
+	
+	if(AppInfo::page.nonStandardArgs.dataArray &&
+		AppInfo::page.nonStandardArgs.byteCount)
+	{
+		return Bishop::Main(*(thirdCGI::imaging::Surface*)
+			AppInfo::page.nonStandardArgs.dataArray);
+		
+	}else
+	{
+		_PANIC_CONDITION_BUGCHECK_
+	}
 }

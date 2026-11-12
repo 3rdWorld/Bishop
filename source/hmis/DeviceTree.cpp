@@ -21,18 +21,18 @@ GetRoot()
         {
             hd->deviceName = 'TOOR';
             
-            hd->descriptorType
-                = HardwareDescriptor::Type_Hardware;
+            hd->descriptorType = thirdUSL::hmis::
+                HardwareDescriptor::Type_Hardware;
         
             hd->flags.bits.Enumerable = true;
         
-            return hd;
+            return *hd;
             
         }else
         {
             _PANIC_CONDITION_BUGCHECK_
         }
-    }
+    };
 
     static auto& root = createDeviceTreeRoot();
 
